@@ -34,6 +34,9 @@ _IRQ_CENTRAL_CONNECT = const(1)
 _IRQ_CENTRAL_DISCONNECT = const(2)
 _IRQ_GATTS_WRITE = const(3)
 
+
+# A Service is a container for 1 or more characteristics
+# Characteristrics can have a descriptor  which say whether they are read/write/notify etc
 # Service UUID
 _UART_UUID = bluetooth.UUID("7dbea1af-b4ed-4d65-99c9-78b85f2f371f")
 # Transmitted characteristic UUID - a sample characteristic that's read-only and notifies
