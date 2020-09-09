@@ -36,12 +36,12 @@ _IRQ_GATTS_WRITE = const(3)
 
 # Service UUID
 _UART_UUID = bluetooth.UUID("7dbea1af-b4ed-4d65-99c9-78b85f2f371f")
-# Transmitted characteristic UUID
+# Transmitted characteristic UUID - a sample characteristic that's read-only and notifies
 _UART_TX = (
     bluetooth.UUID("bd9945a3-5c60-45b1-9f0e-fd3c5eb163b2"),
     bluetooth.FLAG_READ | bluetooth.FLAG_NOTIFY,
 )
-# Received characteristic UUID
+# Received characteristic UUID - a sample characteristic that's read-write
 _UART_RX = (
     bluetooth.UUID("8a1e3d71-7224-4d9d-bf07-cc924abb8db6"),
     bluetooth.FLAG_WRITE | bluetooth.FLAG_WRITE_NO_RESPONSE,
@@ -89,17 +89,22 @@ def advertising_payload(limited_disc=False, br_edr=False, name=None, services=No
 class BLESimplePeripheral:
     def __init__(self, ble, name="car-leo"):
         self._ble = ble
+        
+        # Turn on bluetooth
         self._ble.active(True)
+        
+        # Register callback function so we get notified of connects/disconnects/writes etc
         self._ble.irq(handler=self._irq)
-        ((self._handle_tx, self._handle_rx,),) = self._ble.gatts_register_services(
-            (_UART_SERVICE,)
-        )
+        
+        ((self._handle_tx, self._handle_rx,),) = self._ble.gatts_register_services((_UART_SERVICE,) )
         self._connections = set()
         self._write_callback = None
         self._payload = advertising_payload(name=name, services=[_UART_UUID],)
+        
+        # Start advertising
         self._advertise()
 
-
+    # This is essentially a callback function
     def _irq(self, event, data):
         # Track connections so we can send notifications.
         if event == _IRQ_CENTRAL_CONNECT:
