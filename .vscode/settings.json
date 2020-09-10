@@ -44,5 +44,6 @@
         ".micropy\\BradenM-micropy-stubs-3cc928b\\stubs",
         ".micropy\\esp32_ble_server"
     ],
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
+    "python.languageServer": "Microsoft"
 }

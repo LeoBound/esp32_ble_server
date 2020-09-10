@@ -1,5 +1,5 @@
-import struct
 import math
+import struct
 import time
 import bluetooth
 import machine
@@ -12,7 +12,7 @@ LED_PWM.duty(0)
 def pulse(pwm, t):
     for i in range(20):
         pwm.duty(int(math.sin(i / 10 * math.pi) * 500 + 500))
-        time.sleep_ms(t)
+        time.sleep(t/1E3)
 
 
 _ADV_TYPE_FLAGS = const(0x01)
