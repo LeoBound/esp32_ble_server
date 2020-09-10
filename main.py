@@ -1,3 +1,5 @@
+# Big comments take up unnecessary space on the device so try to avoid using lots of equals signs for emphasis. 
+
 import math
 import struct
 import time
