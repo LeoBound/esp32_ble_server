@@ -1,7 +1,7 @@
 {
     "MicroPython.executeButton": [
         {
-            "text": "▶",
+            "text": "\u00e2\u2013\u00b6",
             "tooltip": "Run",
             "alignment": "left",
             "command": "extension.executeFile",
@@ -18,7 +18,10 @@
         }
     ],
     "python.autoComplete.extraPaths": [
-        "c:/Users/Leo/.vscode/extensions/rt-thread.rt-thread-micropython-1.0.7/microExamples/code-completion"
+        ".micropy\\BradenM-micropy-stubs-3cc928b\\frozen",
+        ".micropy\\BradenM-micropy-stubs-e1b8ce6\\frozen",
+        ".micropy\\BradenM-micropy-stubs-3cc928b\\stubs",
+        ".micropy\\esp32_ble_server"
     ],
     "python.linting.pylintArgs": [
         "--init-hook",
@@ -26,5 +29,20 @@
     ],
     "files.associations": {
         ".mpyproject.json": "jsonc"
-    }
+    },
+    "python.linting.enabled": true,
+    "python.jediEnabled": false,
+    "python.autoComplete.typeshedPaths": [
+        ".micropy\\BradenM-micropy-stubs-3cc928b\\frozen",
+        ".micropy\\BradenM-micropy-stubs-e1b8ce6\\frozen",
+        ".micropy\\BradenM-micropy-stubs-3cc928b\\stubs",
+        ".micropy\\esp32_ble_server"
+    ],
+    "python.analysis.typeshedPaths": [
+        ".micropy\\BradenM-micropy-stubs-3cc928b\\frozen",
+        ".micropy\\BradenM-micropy-stubs-e1b8ce6\\frozen",
+        ".micropy\\BradenM-micropy-stubs-3cc928b\\stubs",
+        ".micropy\\esp32_ble_server"
+    ],
+    "python.linting.pylintEnabled": true
 }
