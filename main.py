@@ -1,7 +1,7 @@
-import bluetooth
 import struct
-import time
 import math
+import time
+import bluetooth
 import machine
 from micropython import const
 
@@ -9,16 +9,11 @@ LED_PWM = machine.PWM(machine.Pin(2, machine.Pin.OUT), freq=1000)
 LED_PWM.duty(0)
 
 
-def pulse(l, t):
+def pulse(pwm, t):
     for i in range(20):
-        l.duty(int(math.sin(i / 10 * math.pi) * 500 + 500))
+        pwm.duty(int(math.sin(i / 10 * math.pi) * 500 + 500))
         time.sleep_ms(t)
 
-
-# Advertising payloads are repeated packets of the following form:
-#   1 byte data length (N + 1)
-#   1 byte type (see constants below)
-#   N bytes type-specific data
 
 _ADV_TYPE_FLAGS = const(0x01)
 _ADV_TYPE_NAME = const(0x09)
@@ -66,7 +61,8 @@ def advertising_payload(limited_disc=False, br_edr=False, name=None, services=No
 
     _append(
         _ADV_TYPE_FLAGS,
-        struct.pack("B", (0x01 if limited_disc else 0x02) + (0x18 if br_edr else 0x04)),
+        struct.pack("B", (0x01 if limited_disc else 0x02) +
+                    (0x18 if br_edr else 0x04)),
     )
 
     if name:
@@ -92,18 +88,19 @@ def advertising_payload(limited_disc=False, br_edr=False, name=None, services=No
 class BLESimplePeripheral:
     def __init__(self, ble, name="car-leo"):
         self._ble = ble
-        
+
         # Turn on bluetooth
         self._ble.active(True)
-        
+
         # Register callback function so we get notified of connects/disconnects/writes etc
         self._ble.irq(handler=self._irq)
-        
-        ((self._handle_tx, self._handle_rx,),) = self._ble.gatts_register_services((_UART_SERVICE,) )
+
+        ((self._handle_tx, self._handle_rx,),
+         ) = self._ble.gatts_register_services((_UART_SERVICE,))
         self._connections = set()
         self._write_callback = None
         self._payload = advertising_payload(name=name, services=[_UART_UUID],)
-        
+
         # Start advertising
         self._advertise()
 
@@ -157,9 +154,9 @@ def demo(ping_interval=1):
     while True:
         if bleperiph.is_connected():
             # Short burst of queued notifications.
-            data = str(i) + ': This is a big string isn\'t it'
+            # data = str(i) + ': This is a big string isn\'t it'
             #print("Transmitting:", data)
-            #bleperiph.send(data)
+            # bleperiph.send(data)
             i += 1
         time.sleep(ping_interval)
 
