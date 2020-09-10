@@ -30,11 +30,12 @@ _IRQ_CENTRAL_DISCONNECT = const(2)
 _IRQ_GATTS_WRITE = const(3)
 
 # ========================================================================================
-# BTLE Config
+# BLE Config
 # ========================================================================================
-# A Service is a container for 1 or more characteristics
-# Characteristrics can have a descriptor  which say whether they are read/write/notify etc
-# All are identified by UUIDs
+# BLE Reminder
+# - A Service is a container for 1 or more characteristics
+# - Characteristrics can have a descriptor which say whether they are read/write/notify etc
+# - All are identified by UUIDs
 
 # Service UUID
 _UART_UUID = bluetooth.UUID("7dbea1af-b4ed-4d65-99c9-78b85f2f371f")
@@ -50,7 +51,7 @@ _UART_RX = (
     bluetooth.FLAG_WRITE | bluetooth.FLAG_WRITE_NO_RESPONSE,
 )
 
-# Construct service from attributes and UUID
+# Construct the service
 _UART_SERVICE = (
     _UART_UUID,
     (_UART_TX, _UART_RX,),
@@ -131,6 +132,7 @@ class BLESimplePeripheral:
             if value_handle == self._handle_rx and self._write_callback:
                 self._write_callback(value)
 
+    # Send data to all connected devices
     def send(self, data):
         for conn_handle in self._connections:
             self._ble.gatts_notify(conn_handle, self._handle_tx, data)
@@ -138,6 +140,7 @@ class BLESimplePeripheral:
     def is_connected(self):
         return len(self._connections) > 0
 
+    # Advertiser
     def _advertise(self, interval_us=500000):
         print("Starting advertising")
         self._ble.gap_advertise(interval_us, adv_data=self._payload)
@@ -145,8 +148,11 @@ class BLESimplePeripheral:
     def on_write(self, callback):
         self._write_callback = callback
 
-
+# ==================================================================
+# Entry point
+# ==================================================================
 def demo(ping_interval=1):
+    # Grab the BLE device and wrap into BLESimplePeripheral
     ble = bluetooth.BLE()
     bleperiph = BLESimplePeripheral(ble)
 
