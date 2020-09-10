@@ -29,11 +29,16 @@ _IRQ_CENTRAL_CONNECT = const(1)
 _IRQ_CENTRAL_DISCONNECT = const(2)
 _IRQ_GATTS_WRITE = const(3)
 
-
+# ========================================================================================
+# BTLE Config
+# ========================================================================================
 # A Service is a container for 1 or more characteristics
 # Characteristrics can have a descriptor  which say whether they are read/write/notify etc
+# All are identified by UUIDs
+
 # Service UUID
 _UART_UUID = bluetooth.UUID("7dbea1af-b4ed-4d65-99c9-78b85f2f371f")
+
 # Transmitted characteristic UUID - a sample characteristic that's read-only and notifies
 _UART_TX = (
     bluetooth.UUID("bd9945a3-5c60-45b1-9f0e-fd3c5eb163b2"),
@@ -44,6 +49,7 @@ _UART_RX = (
     bluetooth.UUID("8a1e3d71-7224-4d9d-bf07-cc924abb8db6"),
     bluetooth.FLAG_WRITE | bluetooth.FLAG_WRITE_NO_RESPONSE,
 )
+
 # Construct service from attributes and UUID
 _UART_SERVICE = (
     _UART_UUID,
