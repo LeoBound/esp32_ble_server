@@ -1,5 +1,3 @@
-# Big comments take up unnecessary space on the device so try to avoid using lots of equals signs for emphasis. 
-
 import math
 import struct
 import time
@@ -31,9 +29,8 @@ _IRQ_CENTRAL_CONNECT = const(1)
 _IRQ_CENTRAL_DISCONNECT = const(2)
 _IRQ_GATTS_WRITE = const(3)
 
-# ========================================================================================
 # BLE Config
-# ========================================================================================
+
 # BLE Reminder
 # - A Service is a container for 1 or more characteristics
 # - Characteristrics can have a descriptor which say whether they are read/write/notify etc
@@ -150,9 +147,7 @@ class BLESimplePeripheral:
     def on_write(self, callback):
         self._write_callback = callback
 
-# ==================================================================
 # Entry point
-# ==================================================================
 def demo(ping_interval=1):
     # Grab the BLE device and wrap into BLESimplePeripheral
     ble = bluetooth.BLE()
